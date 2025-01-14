@@ -12,7 +12,7 @@ public class Main {
         String playerName = scanner.nextLine();
         Player player = new Player(playerName);
 
-        // Helyszínek létrehozása
+       
         Location forest = new Location("Oroszlány Petőfi", "Legveszélyesebb hely Oroszlányban, tele titkokkal és veszélyekkel.");
         forest.addEnemy(new Enemy("Csikós Armando"));
         forest.addEnemy(new Enemy("Száva Vince"));
@@ -73,7 +73,7 @@ public class Main {
                         gameRunning = false;
                     } else if (action == 2) {
                         Enemy enemy = currentLocation.enemies.get(random.nextInt(currentLocation.enemies.size()));
-                        System.out.println("\nEgy " + enemy.name + " késsel és rozsdás karóval támad!");
+                        System.out.println("\n Egy " + enemy.name + " késsel és rozsdás karóval támad!");
                         while (player.isAlive() && enemy.isAlive()) {
                             System.out.println("1. Támadás");
                             System.out.println("2. Futás");
@@ -100,13 +100,21 @@ public class Main {
                     } else if (action == 3) {
                         System.out.println("A rendőrség hívása folyamatban...");
                         if (random.nextBoolean()) {
-                            System.out.println("A rendőrség megérkezett és segít neked a harcban!");
+                            System.out.println("A rendőrség elkapta az ellenséget! 10 év fegyházra itélték a család tadjait!");
                             for (Enemy enemy : currentLocation.enemies) {
-                                enemy.health -= 20; // A rendőrség 20 életerőt levon az ellenségektől
-                                System.out.println("A rendőrség támadta " + enemy.name + "-t! Életereje: " + enemy.health);
+                                enemy.health = 0; // Az ellenség legyőzve
+                                System.out.println(enemy.name + " elkapva!");
                             }
                         } else {
-                            System.out.println("Sajnálom, a rendőrség nem tudott megérkezni időben.");
+                            System.out.println("A rendőrség nem tudta elkapni az ellenséget!");
+                            if (random.nextBoolean()) {
+                                System.out.println("Az ellenségek elkapnak téged!");
+                                player.health = 0; // A játékos legyőzve
+                                System.out.println("Sajnálom, " + player.name + ", az ellenségek legyőztek! A kaland véget ért.");
+                                gameRunning = false;
+                            } else {
+                                System.out.println("Sikerült elmenekülnöd az ellenségek elől!");
+                            }
                         }
                     }
                 }
