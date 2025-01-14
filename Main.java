@@ -62,6 +62,7 @@ public class Main {
                 if (!currentLocation.enemies.isEmpty()) {
                     System.out.println("\n1. Próbáld megtalálni az ellenség búvóhelyét a titkos levéllel.");
                     System.out.println("2. Támadj az ellenségre itt és most.");
+                    System.out.println("3. Hívom a rendőrséget!");
                     System.out.print("Válassz egy lehetőséget: ");
                     int action = scanner.nextInt();
                     if (action == 1) {
@@ -74,7 +75,7 @@ public class Main {
                         Enemy enemy = currentLocation.enemies.get(random.nextInt(currentLocation.enemies.size()));
                         System.out.println("\nEgy " + enemy.name + " késsel és rozsdás karóval támad!");
                         while (player.isAlive() && enemy.isAlive()) {
-                            System.out.println("1 . Támadás");
+                            System.out.println("1. Támadás");
                             System.out.println("2. Futás");
                             System.out.print("Válassz egy lehetőséget: ");
                             action = scanner.nextInt();
@@ -95,6 +96,17 @@ public class Main {
                             System.out.println("Győztél! " + enemy.name + " legyőzve!");
                             player.gainExperience(50);
                             currentLocation.enemies.remove(enemy);
+                        }
+                    } else if (action == 3) {
+                        System.out.println("A rendőrség hívása folyamatban...");
+                        if (random.nextBoolean()) {
+                            System.out.println("A rendőrség megérkezett és segít neked a harcban!");
+                            for (Enemy enemy : currentLocation.enemies) {
+                                enemy.health -= 20; // A rendőrség 20 életerőt levon az ellenségektől
+                                System.out.println("A rendőrség támadta " + enemy.name + "-t! Életereje: " + enemy.health);
+                            }
+                        } else {
+                            System.out.println("Sajnálom, a rendőrség nem tudott megérkezni időben.");
                         }
                     }
                 }
